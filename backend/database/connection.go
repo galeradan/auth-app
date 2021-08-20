@@ -6,6 +6,9 @@ import (
 	"gorm.io/gorm"
 )
 
+// Global variable equivalent to connection
+var DB *gorm.DB
+
 func Connect() {
 	// Initialize connection to database
 	connection, err := gorm.Open(mysql.Open("root:root@/auth_app_db"), &gorm.Config{})
@@ -14,6 +17,8 @@ func Connect() {
 	if err != nil {
 		panic("Could not connect to database")
 	}
+
+	DB = connection
 
 	connection.AutoMigrate(&models.User{})
 
