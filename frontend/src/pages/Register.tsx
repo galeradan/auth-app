@@ -1,10 +1,12 @@
 import React, { SyntheticEvent } from 'react'
 import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 const Register = () => {
   const [name, setName] = useState<String>('')
   const [email, setEmail] = useState<String>('')
   const [password, setPassword] = useState<String>('')
+  const [redirect, setRedirect] = useState<Boolean>(false)
 
   const submit = async(e: SyntheticEvent)=>{
       e.preventDefault();
@@ -19,11 +21,18 @@ const Register = () => {
         })
       })
 
+      // CONVERT TO PROMISE
       const content = await response.json()
 
       if(content.hasOwnProperty('error')){
         alert(content["error"]["Message"])
+      }else{
+        setRedirect(true)
       }
+  }
+
+  if(redirect){
+    return <Redirect to="/login"/>
   }
 
   return (
