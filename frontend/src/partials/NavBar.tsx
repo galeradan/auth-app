@@ -1,4 +1,4 @@
-function NavBar() {
+const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
       <a className="navbar-brand" href="/">Auth App</a>
