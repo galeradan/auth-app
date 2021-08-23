@@ -14,9 +14,9 @@ function App() {
         <NavBar/>
         <main className="container mt-3">
           <Switch>
+            <Route exact path ="/" component={Home}/>
             <Route exact path ="/login" component={Login}/>
             <Route exact path ="/register" component={Register}/>
-            <Route exact path ="/home" component={Home}/>
           </Switch>
         </main>
       </BrowserRouter>
