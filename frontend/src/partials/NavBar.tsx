@@ -8,10 +8,10 @@ const NavBar = () => {
       <div className="collapse navbar-collapse" id="navbarCollapse">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="/user">Login</a>
+            <a className="nav-link" href="/login">Login</a>
           </li>
           <li className="nav-item active">
-            <a className="nav-link" href="/user">Register</a>
+            <a className="nav-link" href="/register">Register</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/logout">Logout</a>
