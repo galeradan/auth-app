@@ -15,6 +15,11 @@ func Pusher(c *fiber.Ctx) error {
 	}
 
 	var data map[string]string
+
+	if err := c.BodyParser(&data); err != nil {
+		return err
+	}
+
 	pusherClient.Trigger("chat", "message", data)
 
 	return c.JSON([]string{})

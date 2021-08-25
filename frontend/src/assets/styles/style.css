@@ -41,3 +41,9 @@ code {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.chat-messages{
+  max-height: 450px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

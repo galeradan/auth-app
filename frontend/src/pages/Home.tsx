@@ -1,12 +1,91 @@
-import React from 'react';
+import Pusher from 'pusher-js';
+import React, { SyntheticEvent, useState } from 'react';
+import { useEffect } from 'react';
+
+interface Messages {
+  name: string;
+  message: string;
+}
 
 const Home = (props: {name: string}) => {
+  const [chat, setChat] = useState('')
+  const [messages, setMessages] = useState([] as any)
+  let allMessages: Messages[] = []
+
+  useEffect(()=>{
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher('1b2c8b2a564bfd6991f3', {
+      cluster: 'ap1'
+    });
+
+    const channel = pusher.subscribe('chat');
+    channel.bind('message', (data: Messages) => {
+      allMessages.push(data)
+      setMessages(allMessages)
+    });
+    // eslint-disable-next-line
+  },[])
+
+  const submit = async (e: SyntheticEvent) =>{
+    e.preventDefault()
+
+    if(chat === ''){
+     return alert("Please enter a message")
+    }
+
+    let data = {
+      "name": props.name,
+      "message": chat
+    }
+
+    await fetch("http://localhost:8000/api/messages",{
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(data)
+    })
+    
+    setChat('')
+  }
+
+  const capitalize = (text: string) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   return (
       <>
-        <h1>Home Page</h1>
-        <p>
-          {props.name ? `Welcome back ${props.name}` : 'You are not authenticated'}
-        </p>
+        <div className="chat-header">
+          <h1>Chat now</h1>
+          <p>
+            {props.name ? `Hi ${capitalize(props.name)}, start chatting!` : 'Please login to start chatting'}
+          </p>
+        </div>
+        <div className="chat-body">
+        {
+          props.name? 
+            <>
+              <div className="chat-messages list-group list-group-flush mb-2">
+              {
+                messages.map((record: Messages, key:any)=>{
+                  return (
+                    <div key={key} className={`"list-group-item py-3 lh-tight" ${record.name === props.name ? 'text-right pr-4 bg-light' : "text-left"}`}>
+                        <strong>{capitalize(record.name)}</strong>
+                        <p>{record.message}</p>
+                    </div>
+                  )
+                })
+              }
+              </div>
+              <form className="chat-input" onSubmit={submit}>
+                <div className="d-flex">
+                  <input type="text"  className="form-control mr-2" placeholder="Your message" value={chat} onChange={e => setChat(e.target.value)}/>
+                  <button className="btn btn-primary">Send</button>
+                </div>
+              </form>
+            </>
+            : ''
+          }
+        </div>
       </>
   );
 }
