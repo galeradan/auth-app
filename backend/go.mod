@@ -11,6 +11,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.2 // indirect
 	github.com/klauspost/compress v1.12.2 // indirect
+	github.com/pusher/pusher-http-go v4.0.1+incompatible
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.26.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
