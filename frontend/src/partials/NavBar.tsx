@@ -2,6 +2,8 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 const NavBar = (props: {name:string, setName: (name:string)=> void}) => {
+
+  
   const logout = async ()=>{
       await fetch("http://localhost:8000/api/logout", {
           method: "POST",
@@ -10,6 +12,7 @@ const NavBar = (props: {name:string, setName: (name:string)=> void}) => {
       })
 
       props.setName('')
+      localStorage.setItem(`isAuth`, JSON.stringify(false))
   }
 
   let menu;

@@ -9,20 +9,25 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 function App() {
   const [name, setName] = useState<string>('')
 
-  useEffect(()=>{
-    (
-      async () =>{
-       const response = await fetch("http://localhost:8000/api/user", {
-          method: "GET",
-          headers: {'Content-Type': 'application/json'},
-          credentials: 'include'
-        })
-        const content = await response.json()
+  const getUser = async() =>{
+    const response = await fetch("http://localhost:8000/api/user", {
+      method: "GET",
+      headers: {'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
 
-        setName(content.name)
-      }
-    )();
-  })
+    const content = await response.json()
+    setName(content.name)
+    localStorage.setItem(`isAuth`, JSON.stringify(true))
+  }
+      
+  useEffect(()=>{
+    if(localStorage.getItem("isAuth") === 'true'){
+      getUser()
+    }
+  })
+
+  
   
   return (
     <>
@@ -32,7 +37,7 @@ function App() {
         <main className="container mt-3">
           <Switch>
             <Route exact path ="/home" component={() => <Home name={name}/>}/>
-            <Route exact path ="/login" component={() => <Login setName={setName}/>}/>
+            <Route exact path ="/login" component={() => <Login getUser={getUser}/>}/>
             <Route exact path ="/register" component={Register}/>
             <Redirect from="/" to='/login'/>
           </Switch>
