@@ -1,5 +1,4 @@
-import React, { SyntheticEvent } from 'react'
-import { useState } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const Register = () => {
@@ -21,7 +20,7 @@ const Register = () => {
         })
       })
 
-      // CONVERT TO PROMISE
+      // TODO: CONVERT TO PROMISE
       const content = await response.json()
 
       if(content.hasOwnProperty('error')){

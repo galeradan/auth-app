@@ -29,7 +29,12 @@ func Register(c *fiber.Ctx) error {
 		Password: password,
 	}
 
-	database.DB.Create(&user)
+	if err := database.DB.Create(&user).Error; err != nil {
+		c.Status(fiber.StatusUnprocessableEntity)
+		return c.JSON(fiber.Map{
+			"error": err,
+		})
+	}
 
 	return c.JSON(user)
 }
