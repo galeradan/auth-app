@@ -2,10 +2,10 @@ import { useState, SyntheticEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const Register = () => {
-  const [name, setName] = useState<String>('')
-  const [email, setEmail] = useState<String>('')
-  const [password, setPassword] = useState<String>('')
-  const [redirect, setRedirect] = useState<Boolean>(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
 
   const submit = async(e: SyntheticEvent)=>{
       e.preventDefault();
