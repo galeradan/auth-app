@@ -8,6 +8,12 @@ import (
 )
 
 func UpdateUser(c *fiber.Ctx) error {
+	var data map[string]string
+
+	if err := c.BodyParser(&data); err != nil {
+		return err
+	}
+
 	// Get's the cookie
 	cookie := c.Cookies("jwt")
 
@@ -17,13 +23,22 @@ func UpdateUser(c *fiber.Ctx) error {
 	if err != nil {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(fiber.Map{
-			"message": "unauthorized",
+			"error": err.Error(),
 		})
 	}
 
-	// Gets the User's record and return it as response
+	// Gets the User's record and set new values
 	var user models.User
 	database.DB.Where("id = ?", issuer).First(&user)
+
+	user.Name = data["name"]
+	user.Email = data["email"]
+
+	if err := database.DB.Save(&user).Error; err != nil {
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
 
 	return c.JSON(user)
 }
