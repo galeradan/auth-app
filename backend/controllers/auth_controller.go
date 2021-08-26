@@ -7,11 +7,10 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/galeradan/auth-app/backend/database"
 	"github.com/galeradan/auth-app/backend/models"
+	"github.com/galeradan/auth-app/backend/utils"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
-
-const SecretKey = "secret"
 
 func Register(c *fiber.Ctx) error {
 	var data map[string]string
@@ -71,7 +70,7 @@ func Login(c *fiber.Ctx) error {
 		ExpiresAt: time.Now().Add(time.Hour * 1).Unix(), // equals 1 hour
 	})
 
-	token, err := claims.SignedString([]byte(SecretKey))
+	token, err := claims.SignedString([]byte(utils.GetEnv("SECRET")))
 
 	if err != nil {
 		c.Status(fiber.StatusInternalServerError)
@@ -100,7 +99,7 @@ func User(c *fiber.Ctx) error {
 
 	// Parses the cookie
 	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
+		return []byte(utils.GetEnv("SECRET")), nil
 	})
 
 	// Checks if the parsed cookie is authorized
