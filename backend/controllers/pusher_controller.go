@@ -7,9 +7,9 @@ import (
 
 func Pusher(c *fiber.Ctx) error {
 	pusherClient := pusher.Client{
-		AppID:   "1255867",
-		Key:     "1b2c8b2a564bfd6991f3",
-		Secret:  "3b8fadde52060dc7a4a9",
+		AppID:   "1256533",
+		Key:     "2f01d024dfdccd763f51",
+		Secret:  "5121444064adf71a1f36",
 		Cluster: "ap1",
 		Secure:  true,
 	}

@@ -10,20 +10,29 @@ interface Messages {
 const Home = (props: {name: string}) => {
   const [chat, setChat] = useState('')
   const [messages, setMessages] = useState([] as any)
-  let allMessages: Messages[] = []
+  const pusher = new Pusher('2f01d024dfdccd763f51', {
+    cluster: 'ap1'
+  });
+  
+  
 
   useEffect(()=>{
-    Pusher.logToConsole = true;
+    if(props.name !== ''){
+      console.log("Mounted")
+      // Subscribes to channel
+      const channel = pusher.subscribe('chat');
+      
+      // Updates messages
+      channel.bind('message', (data: Messages) => {
+        setMessages((prevState: Messages[])=>[...prevState, data])
+      });
+    }
+  
+    return () => {
+      pusher.unsubscribe("chat");
+      console.log("Unmounted")
+    };
 
-    const pusher = new Pusher('1b2c8b2a564bfd6991f3', {
-      cluster: 'ap1'
-    });
-
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', (data: Messages) => {
-      allMessages.push(data)
-      setMessages(allMessages)
-    });
     // eslint-disable-next-line
   },[])
 
