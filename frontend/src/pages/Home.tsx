@@ -8,10 +8,12 @@ interface Messages {
 }
 
 const Home = (props: {name: string}) => {
+  const PUSHER_KEY = process.env.REACT_APP_PUSHER_KEY || ''
+  const PUSHER_CLUSTER = process.env.REACT_APP_PUSHER_CLUSTER
   const [chat, setChat] = useState('')
   const [messages, setMessages] = useState([] as any)
-  const pusher = new Pusher('2f01d024dfdccd763f51', {
-    cluster: 'ap1'
+  const pusher = new Pusher(PUSHER_KEY, {
+    cluster: PUSHER_CLUSTER
   });
   
   
