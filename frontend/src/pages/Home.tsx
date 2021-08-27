@@ -11,30 +11,29 @@ const Home = (props: {name: string}) => {
   const PUSHER_KEY = process.env.REACT_APP_PUSHER_KEY || ''
   const PUSHER_CLUSTER = process.env.REACT_APP_PUSHER_CLUSTER
   const [chat, setChat] = useState('')
-  const [messages, setMessages] = useState([] as any)
-  const pusher = new Pusher(PUSHER_KEY, {
-    cluster: PUSHER_CLUSTER
-  });
-  
-  
+  const [messages, setMessages] = useState([] as Messages[])
 
   useEffect(()=>{
+    let isMounted = true
     if(props.name !== ''){
-      console.log("Mounted")
+      const pusher = new Pusher(PUSHER_KEY, {
+        cluster: PUSHER_CLUSTER
+      });
+
       // Subscribes to channel
       const channel = pusher.subscribe('chat');
       
       // Updates messages
       channel.bind('message', (data: Messages) => {
-        setMessages((prevState: Messages[])=>[...prevState, data])
+        if(isMounted){
+          setMessages((prevState: Messages[])=>[...prevState, data])
+        }
       });
     }
-  
-    return () => {
-      pusher.unsubscribe("chat");
-      console.log("Unmounted")
-    };
 
+    return ()=>{
+      isMounted = false
+    }
     // eslint-disable-next-line
   },[])
 
