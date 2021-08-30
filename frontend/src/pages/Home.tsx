@@ -1,6 +1,6 @@
 import Pusher from 'pusher-js';
 import React, { SyntheticEvent, useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface Messages {
   name: string;
@@ -12,16 +12,17 @@ const Home = (props: {name: string}) => {
   const PUSHER_CLUSTER = process.env.REACT_APP_PUSHER_CLUSTER
   const [chat, setChat] = useState('')
   const [messages, setMessages] = useState([] as Messages[])
+  const pusher = useRef<Pusher>();
 
   useEffect(()=>{
     let isMounted = true
     if(props.name !== ''){
-      const pusher = new Pusher(PUSHER_KEY, {
+       pusher.current = new Pusher(PUSHER_KEY, {
         cluster: PUSHER_CLUSTER
       });
 
       // Subscribes to channel
-      const channel = pusher.subscribe('chat');
+      const channel = pusher.current.subscribe('chat');
       
       // Updates messages
       channel.bind('message', (data: Messages) => {
@@ -32,6 +33,7 @@ const Home = (props: {name: string}) => {
     }
 
     return ()=>{
+      pusher.current?.unsubscribe('chat')
       isMounted = false
     }
     // eslint-disable-next-line

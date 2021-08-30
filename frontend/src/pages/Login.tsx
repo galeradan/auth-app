@@ -21,7 +21,11 @@ const Login = (props: {getUser: ()=> void}) => {
     })
 
     const content = await response.json()
-    console.log(content)
+
+    if(content.hasOwnProperty('error')){
+      return alert(content["error"])
+    }
+
     setRedirect(true)
     props.getUser()
   }

@@ -24,7 +24,6 @@ const Profile = (props: {user: User, getUser: ()=> void}) => {
 
       if(content.hasOwnProperty('error')){
         alert(content["error"])
-        console.log(content)
       }
 
       props.getUser()
