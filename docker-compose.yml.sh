@@ -21,7 +21,20 @@ services:
       - "8000:8000"
     depends_on:
       - DB_HOST
-    
+
+  frontend:
+    context: .
+    container_name: auth-frontend-container
+    build:
+      dockerfile: ./docker/frontend/Dockerfile
+    volumes:
+      - './frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - 3000:3000
+    stdin_open: true
+    command: yarn start
+
   db:
     platform: linux/x86_64
     image: "mysql:5.7"
