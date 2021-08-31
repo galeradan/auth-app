@@ -23,9 +23,9 @@ services:
       - DB_HOST
 
   frontend:
-    context: .
     container_name: auth-frontend-container
     build:
+      context: .
       dockerfile: ./docker/frontend/Dockerfile
     volumes:
       - './frontend:/app'
