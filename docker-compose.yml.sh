@@ -1,36 +1,32 @@
 cat << EOS
 version: "3"
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
-    command: bash -c "sleep 10; go run main.go"
-    container_name: backend-container
+    container_name: auth-backend-container
     volumes:
       - "./backend:/app/backend"
     env_file:
       - "./docker/.env"
     environment: 
+      DOCKER_ENV: "1"
       PUSHER_APP_ID:  "1256533"
       PUSHER_KEY:     "2f01d024dfdccd763f51"
       PUSHER_SECRET:  "5121444064adf71a1f36"
       PUSHER_CLUSTER: "ap1"
       SECRET: "secret"
-      DB_USER: "user"
-      DB_PASS: "user"
-      DB_NAME: "auth_app_db"
-      DB_PORT: "3306"
-      DB_HOST: "db"
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - DB_HOST
+    
   db:
     platform: linux/x86_64
     image: "mysql:5.7"
     command: "mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
-    container_name: db-container
+    container_name: auth-db-container
     volumes:
       - "db-data:/var/lib/mysql"
     env_file:
