@@ -7,11 +7,10 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/galeradan/auth-app/backend/database"
 	"github.com/galeradan/auth-app/backend/models"
+	"github.com/galeradan/auth-app/backend/utils"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
-
-const SecretKey = "secret"
 
 func Register(c *fiber.Ctx) error {
 	var data map[string]string
@@ -32,7 +31,7 @@ func Register(c *fiber.Ctx) error {
 	if err := database.DB.Create(&user).Error; err != nil {
 		c.Status(fiber.StatusUnprocessableEntity)
 		return c.JSON(fiber.Map{
-			"error": err,
+			"error": err.Error(),
 		})
 	}
 
@@ -54,7 +53,7 @@ func Login(c *fiber.Ctx) error {
 	if user.ID == 0 {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(fiber.Map{
-			"message": "user not found",
+			"error": "user not found",
 		})
 	}
 
@@ -62,7 +61,7 @@ func Login(c *fiber.Ctx) error {
 	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"])); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
-			"message": "password mismatched",
+			"error": "password mismatched",
 		})
 	}
 
@@ -71,12 +70,12 @@ func Login(c *fiber.Ctx) error {
 		ExpiresAt: time.Now().Add(time.Hour * 1).Unix(), // equals 1 hour
 	})
 
-	token, err := claims.SignedString([]byte(SecretKey))
+	token, err := claims.SignedString([]byte(utils.GetEnv("SECRET")))
 
 	if err != nil {
 		c.Status(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
-			"message": "could not login",
+			"error": "could not login",
 		})
 	}
 
@@ -91,6 +90,7 @@ func Login(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "success",
+		"secret":  utils.GetEnv("SECRET"),
 	})
 }
 
@@ -98,25 +98,19 @@ func User(c *fiber.Ctx) error {
 	// Get's the cookie
 	cookie := c.Cookies("jwt")
 
-	// Parses the cookie
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
+	issuer, err := utils.GetClaimsIssuer(cookie)
 
 	// Checks if the parsed cookie is authorized
 	if err != nil {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(fiber.Map{
-			"message": "unauthorized",
+			"error": "unauthorized",
 		})
 	}
 
-	// Gets the token Claims and converts to StandardClaims to get Issuer
-	claims := token.Claims.(*jwt.StandardClaims)
-
 	// Gets the User's record and return it as response
 	var user models.User
-	database.DB.Where("id = ?", claims.Issuer).First(&user)
+	database.DB.Where("id = ?", issuer).First(&user)
 
 	return c.JSON(user)
 }

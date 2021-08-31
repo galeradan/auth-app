@@ -10,7 +10,7 @@ const Login = (props: {getUser: ()=> void}) => {
   const submit = async(e: SyntheticEvent)=>{
     e.preventDefault();
     
-    await fetch("http://localhost:8000/api/login", {
+    const response = await fetch("http://localhost:8000/api/login", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       credentials: "include",
@@ -20,7 +20,12 @@ const Login = (props: {getUser: ()=> void}) => {
       })
     })
 
-    // const content = await response.json()
+    const content = await response.json()
+
+    if(content.hasOwnProperty('error')){
+      return alert(content["error"])
+    }
+
     setRedirect(true)
     props.getUser()
   }

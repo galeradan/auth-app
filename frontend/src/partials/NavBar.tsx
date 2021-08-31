@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { User } from '../App'
 
-const NavBar = (props: {name:string, setName: (name:string)=> void}) => {
+const NavBar = (props: {name:string, setUser: (user: User)=> void}) => {
 
   
   const logout = async ()=>{
@@ -11,7 +12,9 @@ const NavBar = (props: {name:string, setName: (name:string)=> void}) => {
           credentials: 'include'
       })
 
-      props.setName('')
+      props.setUser({
+        name: ''
+      })
       localStorage.setItem(`isAuth`, JSON.stringify(false))
   }
 
@@ -31,6 +34,9 @@ const NavBar = (props: {name:string, setName: (name:string)=> void}) => {
   }else{
     menu = (
       <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <Link to="/profile"className="nav-link">Profile</Link>
+        </li>
         <li className="nav-item">
           <Link to="/login"className="nav-link" onClick={logout}>Logout</Link>
         </li>
