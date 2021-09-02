@@ -24,8 +24,7 @@ func Connect() {
 
 	// builds the data source name
 	if dbEnv == "production" {
-		dsn = utils.GetEnv("CLEARDB_DATABASE_URL")
-
+		dsn = fmt.Sprintf("%s:%s@%s/%s", username, password, dbHost, dbName)
 	} else {
 		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, dbHost, dbPORT, dbName)
 	}
