@@ -2,7 +2,8 @@ name: Backend - Heroku
 
 on:
   push:
-    branches: master
+    branches: 
+      - master
 
 jobs: 
   deploy:
