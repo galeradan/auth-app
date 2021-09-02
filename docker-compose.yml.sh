@@ -33,6 +33,9 @@ services:
     ports:
       - 3000:3000
     stdin_open: true
+    environment: 
+      REACT_APP_PUSHER_KEY:     "2f01d024dfdccd763f51"
+      REACT_APP_PUSHER_CLUSTER: "ap1"
     command: yarn start
 
   db:
