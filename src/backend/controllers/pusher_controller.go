@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/galeradan/auth-app/backend/utils"
+	"github.com/galeradan/auth-app/src/backend/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pusher/pusher-http-go"
 )

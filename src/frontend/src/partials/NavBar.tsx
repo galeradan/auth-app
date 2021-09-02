@@ -5,7 +5,7 @@ import { User } from '../App'
 const NavBar = (props: {name:string, setUser: (user: User)=> void}) => {
   const API_URI = process.env.REACT_APP_API_URI
   const logout = async ()=>{
-      await fetch(`${API_URI}logout`, {
+      await fetch(`${API_URI}/logout`, {
           method: "POST",
           headers: {'Content-Type': 'application/json'},
           credentials: 'include'

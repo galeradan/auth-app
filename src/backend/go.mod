@@ -1,4 +1,4 @@
-module github.com/galeradan/auth-app/backend
+module github.com/galeradan/auth-app/src/backend
 
 go 1.17
 

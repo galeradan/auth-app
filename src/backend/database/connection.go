@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/galeradan/auth-app/backend/models"
-	"github.com/galeradan/auth-app/backend/utils"
+	"github.com/galeradan/auth-app/src/backend/models"
+	"github.com/galeradan/auth-app/src/backend/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
