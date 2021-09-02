@@ -17,6 +17,7 @@ services:
       PUSHER_SECRET:  "5121444064adf71a1f36"
       PUSHER_CLUSTER: "ap1"
       SECRET: "secret"
+      PORT: "8000"
     ports:
       - "8000:8000"
     depends_on:
