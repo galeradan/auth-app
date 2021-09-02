@@ -3,7 +3,7 @@ RUN apk add --no-cache bash
 
 WORKDIR /app/backend
 
-COPY ./backend ./
+COPY ./src/backend ./
 
 RUN go mod download
 

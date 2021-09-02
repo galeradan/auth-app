@@ -7,7 +7,7 @@ services:
       dockerfile: ./docker/backend/Dockerfile
     container_name: auth-backend-container
     volumes:
-      - "./backend:/app/backend"
+      - "./src/backend:/app/backend"
     env_file:
       - "./docker/.env"
     environment: 
@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: ./docker/frontend/Dockerfile
     volumes:
-      - './frontend:/app'
+      - './src/frontend:/app'
       - '/app/node_modules'
     ports:
       - 3000:3000

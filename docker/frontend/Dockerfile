@@ -3,10 +3,10 @@ RUN apk add --no-cache yarn
  
 WORKDIR /app
  
-COPY ./frontend/package*.json ./
+COPY ./src/frontend/package*.json ./
  
 RUN yarn install
  
-COPY ./frontend .
+COPY ./src/frontend .
  
 CMD [ "yarn", "start" ]
