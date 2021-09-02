@@ -20,7 +20,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - DB_HOST
+      - db
 
   frontend:
     container_name: auth-frontend-container

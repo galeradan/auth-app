@@ -14,15 +14,21 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-
 	username := utils.GetEnv("DB_USER")
 	password := utils.GetEnv("DB_PASS")
 	dbName := utils.GetEnv("DB_NAME")
 	dbHost := utils.GetEnv("DB_HOST")
 	dbPORT := utils.GetEnv("DB_PORT")
+	dbEnv := utils.GetEnv("DB_ENV")
+	dsn := ""
 
 	// builds the data source name
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, dbHost, dbPORT, dbName)
+	if dbEnv == "production" {
+		dsn = utils.GetEnv("CLEARDB_DATABASE_URL")
+
+	} else {
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, dbHost, dbPORT, dbName)
+	}
 
 	// Initialize connection to database
 	sqlDB, err := sql.Open("mysql", dsn)
