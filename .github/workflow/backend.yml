@@ -3,6 +3,8 @@ name: Backend - Heroku
 on:
   push:
     branches: master
+    paths:
+      - 'src/backend/**'
 
 jobs: 
   deploy:
@@ -15,3 +17,4 @@ jobs:
           heroku_app_name: "tarachat-api"
           heroku_email: "danerick.galera@gmail.com"
           env_file: ".env.production"
+          appdir: "src/backend"
