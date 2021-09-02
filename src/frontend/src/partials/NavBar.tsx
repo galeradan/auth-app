@@ -45,7 +45,7 @@ const NavBar = (props: {name:string, setUser: (user: User)=> void}) => {
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-      <Link to="/home"className="navbar-brand">Auth App</Link>
+      <Link to="/home"className="navbar-brand">TaraChat</Link>
       {menu}
     </nav>
   );
