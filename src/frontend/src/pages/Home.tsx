@@ -10,6 +10,7 @@ interface Messages {
 const Home = (props: {name: string}) => {
   const PUSHER_KEY = process.env.REACT_APP_PUSHER_KEY || ''
   const PUSHER_CLUSTER = process.env.REACT_APP_PUSHER_CLUSTER
+  const API_URI = process.env.REACT_APP_API_URI  
   const [chat, setChat] = useState('')
   const [messages, setMessages] = useState([] as Messages[])
   const pusher = useRef<Pusher>();
@@ -51,7 +52,7 @@ const Home = (props: {name: string}) => {
       "message": chat
     }
 
-    await fetch("http://localhost:8000/api/messages",{
+    await fetch(`${API_URI}/messages`,{
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(data)

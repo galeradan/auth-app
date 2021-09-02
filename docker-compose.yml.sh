@@ -36,6 +36,7 @@ services:
     environment: 
       REACT_APP_PUSHER_KEY:     "2f01d024dfdccd763f51"
       REACT_APP_PUSHER_CLUSTER: "ap1"
+      REACT_APP_API_URI: "http://localhost:8000/api"
     command: yarn start
 
   db:

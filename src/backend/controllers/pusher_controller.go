@@ -1,25 +1,17 @@
 package controllers
 
 import (
-	"log"
-
+	"github.com/galeradan/auth-app/backend/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
 	"github.com/pusher/pusher-http-go"
 )
 
 func Pusher(c *fiber.Ctx) error {
-	envs, err := godotenv.Read(".env")
-
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	pusherClient := pusher.Client{
-		AppID:   envs["PUSHER_APP_ID"],
-		Key:     envs["PUSHER_KEY"],
-		Secret:  envs["PUSHER_SECRET"],
-		Cluster: envs["PUSHER_CLUSTER"],
+		AppID:   utils.GetEnv("PUSHER_APP_ID"),
+		Key:     utils.GetEnv("PUSHER_KEY"),
+		Secret:  utils.GetEnv("PUSHER_SECRET"),
+		Cluster: utils.GetEnv("PUSHER_CLUSTER"),
 		Secure:  true,
 	}
 

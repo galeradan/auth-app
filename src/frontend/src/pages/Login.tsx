@@ -2,6 +2,7 @@ import { useState, SyntheticEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const Login = (props: {getUser: ()=> void}) => {
+  const API_URI = process.env.REACT_APP_API_URI 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
@@ -10,7 +11,7 @@ const Login = (props: {getUser: ()=> void}) => {
   const submit = async(e: SyntheticEvent)=>{
     e.preventDefault();
     
-    const response = await fetch("http://localhost:8000/api/login", {
+    const response = await fetch(`${API_URI}/login`, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       credentials: "include",

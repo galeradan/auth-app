@@ -3,13 +3,14 @@ import { User } from '../App';
 
 
 const Profile = (props: {user: User, getUser: ()=> void}) => {
+  const API_URI = process.env.REACT_APP_API_URI  
   const [name, setName] = useState(props.user.name)
   const [email, setEmail] = useState(props.user.email)
 
   const submit = async(e: SyntheticEvent)=>{
       e.preventDefault();
       
-      const response = await fetch("http://localhost:8000/api/user/update", {
+      const response = await fetch(`${API_URI}/user/update`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         credentials: "include",

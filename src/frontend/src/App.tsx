@@ -12,13 +12,14 @@ export interface User {
 }
 
 function App() {
+  const API_URI = process.env.REACT_APP_API_URI
   const [user, setUser] = useState<User>({
     name: '',
     email: ''
   })
 
   const getUser = async() =>{
-    const response = await fetch("http://localhost:8000/api/user", {
+    const response = await fetch(`${API_URI}/user`, {
       method: "GET",
       headers: {'Content-Type': 'application/json'},
       credentials: 'include'
@@ -36,6 +37,7 @@ function App() {
     if(localStorage.getItem("isAuth") === 'true'){
       getUser()
     }
+    // eslint-disable-next-line
   },[])
 
   

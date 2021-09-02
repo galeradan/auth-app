@@ -2,6 +2,7 @@ import { useState, SyntheticEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const Register = () => {
+  const API_URI = process.env.REACT_APP_API_URI  
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -10,7 +11,7 @@ const Register = () => {
   const submit = async(e: SyntheticEvent)=>{
       e.preventDefault();
       
-      const response = await fetch("http://localhost:8000/api/register", {
+      const response = await fetch(`${API_URI}/register`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
