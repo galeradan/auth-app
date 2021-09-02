@@ -3,7 +3,8 @@ name: Frontend - Heroku
 on:
   push:
     branches: master
-
+    paths:
+      - 'src/frontend/**'
 jobs: 
   deploy:
     runs-on: ubuntu-latest

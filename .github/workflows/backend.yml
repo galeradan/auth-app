@@ -3,6 +3,8 @@ name: Backend - Heroku
 on:
   push:
     branches: master
+    paths:
+      - 'src/backend/**'
 
 jobs: 
   deploy:
