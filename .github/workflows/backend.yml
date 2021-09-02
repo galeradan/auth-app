@@ -18,3 +18,4 @@ jobs:
           heroku_email: "danerick.galera@gmail.com"
           env_file: ".env.production"
           appdir: "src/backend"
+          branch: "master"
