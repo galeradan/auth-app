@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/galeradan/auth-app/src/backend/database"
-	"github.com/galeradan/auth-app/src/backend/routes"
-	"github.com/galeradan/auth-app/src/backend/utils"
+	"tarachat/backend/database"
+	"tarachat/backend/routes"
+	"tarachat/backend/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"

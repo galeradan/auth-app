@@ -1,7 +1,8 @@
 package routes
 
 import (
-	"github.com/galeradan/auth-app/src/backend/controllers"
+	"tarachat/backend/controllers"
+
 	"github.com/gofiber/fiber/v2"
 )
 

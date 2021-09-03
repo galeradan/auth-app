@@ -4,10 +4,11 @@ import (
 	"strconv"
 	"time"
 
+	"tarachat/backend/database"
+	"tarachat/backend/models"
+	"tarachat/backend/utils"
+
 	"github.com/dgrijalva/jwt-go"
-	"github.com/galeradan/auth-app/src/backend/database"
-	"github.com/galeradan/auth-app/src/backend/models"
-	"github.com/galeradan/auth-app/src/backend/utils"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )

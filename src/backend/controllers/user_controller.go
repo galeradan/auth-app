@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"github.com/galeradan/auth-app/src/backend/database"
-	"github.com/galeradan/auth-app/src/backend/models"
-	"github.com/galeradan/auth-app/src/backend/utils"
+	"tarachat/backend/database"
+	"tarachat/backend/models"
+	"tarachat/backend/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 
